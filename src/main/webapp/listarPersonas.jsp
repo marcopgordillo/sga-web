@@ -21,7 +21,11 @@
             </tr>
             <c:forEach var="persona" items="${personas}">
                 <tr>
-                    <td>${persona.nombre}</td>
+                    <td>
+                        <a href="ServletControlador?accion=editar&idPersona=${persona.idPersona}">
+                            ${persona.nombre}
+                        </a>
+                    </td>
                     <td>${persona.apePaterno}</td>
                     <td>${persona.email}</td>
                 </tr>
