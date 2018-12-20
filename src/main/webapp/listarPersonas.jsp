@@ -13,6 +13,9 @@
     </head>
     <body>
         <h1>Listado de Personas</h1>
+        <a href="agregarPersona.jsp">Agregar Persona</a>
+        <br/>
+        <br/>
         <table border="1">
             <tr>
                 <th>Nombre</th>

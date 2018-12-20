@@ -15,15 +15,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
  * @author mgordillo
  */
-@WebServlet("/ListarPersonas")
+@WebServlet({"/ServletControlador", "/ListarPersonas"})
 public class ServletControlador extends HttpServlet {
     
     private static final long serialVersionUID = 1L;
+    
+    static Logger log = LogManager.getRootLogger();
     
     @Inject
     private PersonaService personaService;
@@ -35,6 +39,7 @@ public class ServletControlador extends HttpServlet {
         if (accion != null && accion.equals("editar")) {
             //1. Recuperamos el idPersona seleccionado
             String idPersonaString = request.getParameter("idPersona");
+            log.debug("Editar: " + accion + idPersonaString);
             int idPersona = 0;
             if (idPersonaString != null) {
             //2. Creamos el objeto persona a recuperar

@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 @Stateless
 public class PersonaDaoImpl implements PersonaDao {
@@ -29,8 +30,9 @@ public class PersonaDaoImpl implements PersonaDao {
 
     @Override
     public Persona findPersonaByEmail(Persona persona) {
-        //return em.find(Persona.class, persona.getEmail());
-        return (Persona) em.createNamedQuery("Persona.findByEmail").getSingleResult();
+        Query query = em.createNamedQuery("Persona.findByEmail");
+        query.setParameter("email", persona.getEmail());
+        return (Persona) query.getSingleResult();
     }
 
     @Override
@@ -45,7 +47,7 @@ public class PersonaDaoImpl implements PersonaDao {
 
     @Override
     public void deletePersona(Persona persona) {
+        persona = em.getReference(Persona.class, persona.getIdPersona());
         em.remove(persona);
     }
-    
 }
