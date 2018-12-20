@@ -12,9 +12,15 @@ import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.jws.WebService;
 
+/**
+ *
+ * @author usuario
+ */
 @Stateless
-public class PersonaServiceImpl implements PersonaServiceRemote, PersonaService {
+@WebService(endpointInterface = "com.example.sga.servicio.PersonaServiceWS")
+public class PersonaServiceImpl implements PersonaServiceRemote, PersonaService, PersonaServiceWS {
 
     @Resource
     private SessionContext contexto;

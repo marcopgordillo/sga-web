@@ -22,12 +22,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author mgordillo
  */
 @Entity
+@XmlAccessorType(XmlAccessType.FIELD)
 @Table(name = "personas")
 @NamedQueries({
     @NamedQuery(name = "Persona.findAll", query = "SELECT p FROM Persona p")
@@ -68,6 +72,7 @@ public class Persona implements Serializable {
     @Column(name = "telefono")
     private String telefono;
     
+    @XmlTransient
     @OneToMany(mappedBy = "persona", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Usuario> usuariosList = new ArrayList<>();
 
