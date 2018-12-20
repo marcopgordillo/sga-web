@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.example.sga.beans;
 
 import com.example.sga.domain.Persona;
@@ -24,6 +19,8 @@ public class PersonaBean {
     @Inject
     private PersonaService personaService;
     
+    private Persona personaSeleccionada;
+    
     List<Persona> personas;
 
     public PersonaBean() {
@@ -32,6 +29,7 @@ public class PersonaBean {
     @PostConstruct
     public void inicializar() {
         personas = personaService.listarPersonas();
+        personaSeleccionada = new Persona();
     }
 
     public void editListener(RowEditEvent event) {
@@ -45,5 +43,27 @@ public class PersonaBean {
 
     public void setPersonas(List<Persona> personas) {
         this.personas = personas;
-    }    
+    }
+    
+    public Persona getPersonaSeleccionada() {
+        return personaSeleccionada;
+    }
+
+    public void setPersonaSeleccionada(Persona personaSeleccionada) {
+        this.personaSeleccionada = personaSeleccionada;
+    }
+    
+    public void reiniciarPersonaSeleccionada(){
+        this.personaSeleccionada = new Persona();
+    }
+
+    public void agregarPersona() {
+        personaService.registrarPersona(this.personaSeleccionada);
+        this.personaSeleccionada = null;
+    }
+
+    public void eliminarPersona() {
+        personaService.eliminarPersona(this.personaSeleccionada);
+        this.personaSeleccionada = null;
+    }
 }
