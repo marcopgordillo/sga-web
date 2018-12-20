@@ -22,13 +22,23 @@ and open the template in the editor.
                 <h:outputText value="" />
             </f:facet>
         </p:ajaxStatus>
-        <h:form prependId="false">
+        <h:form prependId="false" id="form">
             <p:growl id="messages" showDetail="true" />
-            <p:dataTable value="#{personaBean.personas}" var="persona"
-                         editable="true">
+            <p:messages />
+            
+            <p:dataTable
+                id="personas"
+                value="#{personaBean.personas}" 
+                var="persona"
+                editable="true"
+                rowKey="#{persona.idPersona}"
+                selection="#{personaBean.personaSeleccionada}" 
+                selectionMode="single">
+                
                 <f:facet name="header">
                     Lista de Personas
                 </f:facet>
+                
                 <p:column headerText="Nombre">
                     <p:cellEditor>
                         <f:facet name="output">
@@ -59,15 +69,52 @@ and open the template in the editor.
                         </f:facet>
                     </p:cellEditor>
                 </p:column>
+                
                 <f:facet name="footer">
                     <h:commandButton value="Regresar" action="index" />
+                    <p:spacer height="5px;"/>
+                    <p:commandButton value="Agregar" actionListener="#{personaBean.reiniciarPersonaSeleccionada}" oncomplete="PF('personaDialogo').show();" update="personas">
+                        <p:ajax event="dialogReturn" update="personas"/>
+                    </p:commandButton>
                 </f:facet>
+                
                 <p:column headerText="Opciones" style="width:50px">
                     <p:rowEditor />
                 </p:column>
+                
                 <p:ajax event="rowEdit" listener="#{personaBean.editListener}">
                 </p:ajax>
             </p:dataTable>
+            <p:contextMenu for="personas">
+                <p:menuitem value="Eliminar" update="personas" icon="ui-icon-close" actionListener="#{personaBean.eliminarPersona}" ajax="false"/>
+            </p:contextMenu>
+        </h:form>
+        <h:form id="dialogoForm" prependId="false">
+            <p:dialog header="Agregar Persona" widgetVar="personaDialogo" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="personaDetalle" style="text-align:center;">
+                    <p:panelGrid  columns="2" columnClasses="label,value">
+                        <h:outputText value="Nombre" />
+                        <h:inputText value="#{personaBean.personaSeleccionada.nombre}" />
+
+                        <h:outputText value="Apellido Paterno:" />
+                        <h:inputText value="#{personaBean.personaSeleccionada.apePaterno}" />
+
+                        <h:outputText value="Apellido Materno" />
+                        <h:inputText value="#{personaBean.personaSeleccionada.apeMaterno}" />
+
+                        <h:outputText value="Email" />
+                        <h:inputText value="#{personaBean.personaSeleccionada.email}" />
+
+                        <h:outputText value="Teléfono" />
+                        <h:inputText value="#{personaBean.personaSeleccionada.telefono}" />
+
+                        <f:facet name="footer">
+                            <h:commandButton value="Agregar" actionListener="#{personaBean.agregarPersona}" />
+                        </f:facet>
+
+                    </p:panelGrid>
+                </p:outputPanel>
+            </p:dialog>
         </h:form>
     </h:body>
 </html>
