@@ -18,4 +18,16 @@ import javax.jws.WebService;
 public interface PersonaServiceWS {
     @WebMethod
     public List<Persona> listarPersonas();
+    
+    @WebMethod
+    public Persona encontrarPersonaPorId(Persona persona);
+    
+    @WebMethod
+    public void registrarPersona(Persona persona);
+    
+    @WebMethod
+    public void modificarPersona(Persona persona);
+    
+    @WebMethod
+    public void eliminarPersona(Persona persona);
 }
